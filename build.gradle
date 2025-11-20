@@ -34,10 +34,25 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'io.github.cdimascio:dotenv-java:3.2.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+	implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.17'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+ tasks.register('runHttps', JavaExec) {
+	 mainClass = 'com.bytebook.bfftg.BffTgApplication' // твой main класс
+	 classpath = sourceSets.main.runtimeClasspath
+	 jvmArgs = [
+			 "-Dserver.port=${System.getenv('SERVER_PORT') ?: '8443'}",
+			 "-Dserver.ssl.key-store=${System.getenv('SSL_KEY_STORE')}",
+			 "-Dserver.ssl.key-store-password=${System.getenv('SSL_KEY_STORE_PASSWORD')}",
+			 "-Dserver.ssl.key-store-type=PKCS12",
+			 "-Dserver.ssl.key-alias=${System.getenv('SSL_KEY_ALIAS')}"
+	 ]
+ }

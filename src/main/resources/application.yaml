@@ -1,0 +1,15 @@
+spring:
+  application:
+    name:
+       - bff-tg
+
+server:
+  port: ${PORT:8080}
+
+telegram:
+  bot:
+   token: ${BOT_TOKEN}
+
+logging:
+  level:
+    org.springframework.web: DEBUG
