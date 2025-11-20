@@ -1,15 +1,10 @@
-version: '3.9'
-
 services:
   app:
     build: .
     ports:
-      - "8443:8443"
+      - "8080:8080"
     environment:
-      - SERVER_PORT=${SERVER_PORT}
-      - SSL_KEY_STORE=./keystore.p12
-      - SSL_KEY_STORE_PASSWORD=${SSL_KEY_STORE_PASSWORD}
-      - SSL_KEY_ALIAS=${SSL_KEY_ALIAS}
+      - PORT=8080
       - BOT_TOKEN=${BOT_TOKEN}
 
   ngrok:
@@ -17,7 +12,7 @@ services:
     platform: linux/amd64
     depends_on:
       - app
-    command: ngrok http https://app:8443
+    command: ngrok http app:8080
     environment:
       - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
     ports:

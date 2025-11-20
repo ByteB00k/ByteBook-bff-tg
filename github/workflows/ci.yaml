@@ -35,6 +35,21 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Clean
+        run: ./gradlew clean
+
+      - name: Run tests
+        run: ./gradlew test
+
+      - name: Build jar
+        run: ./gradlew assemble
+
+      - name: Run checks
+        run: ./gradlew check
+
+      - name: Build
+        run: ./gradlew assemble
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
@@ -43,4 +58,4 @@ jobs:
           token: ${{ secrets.SONAR_TOKEN }}
 
       - name: Run Docker Compose
-        run: docker-compose up -d --build
+        run: docker-compose build
